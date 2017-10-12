@@ -1,0 +1,42 @@
+{% extends 'base_template.html' %}
+{% load socialaccount %}
+
+{% block content %}
+  <div class="panel panel-login">
+    <div class="panel-heading">
+      <hr>
+    </div>
+    <div class="panel-body forms">
+      {% if request.user.is_authenticated %}
+        <div class="card" style="width: 20rem;">
+          <div class="card-block">
+            <h4 class="card-title">
+              Hi,
+              {% if request.user.first_name or request.user.last_name %}
+                {{ request.user.first_name }} {{ request.user.last_name }}
+              {% else %}
+                {{ request.user.username }}
+              {% endif %}</h4>
+            <p class="card-text">Success!!!</p>
+            <form method="post" action="{% url 'account_logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary">Sign Out</button>
+            </form>
+          </div>
+        </div>
+
+
+
+      {% else %}
+        <a href="{% provider_login_url 'google' %}">Login With Google</a>
+      {% endif %}
+    </div>
+  </div>
+
+
+
+
+
+
+
+{% endblock %}
